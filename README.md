@@ -84,6 +84,7 @@ Strongest adjusted correlations (October 2026 run):
 - The t-statistics are naive: they ignore autocorrelation, which overstates significance.
 - The seasonal adjustment uses only 4 to 5 observations per ISO week.
 - Four state-week-product cells (all in MS, 2022-09 to 2023-03) have fewer than 20 stations. A warning test flags them.
+- **Mirror regression (Nov 2026).** The Base dos Dados mirror was last modified on 2026-11-10 and its newest record is now 2026-04-25. `silver_prices_weekly` is incremental and keeps weeks already loaded, so it holds data up to the week of 2026-08-24. Weeks from 2026-04-27 to 2026-08-24 were restored from a copy of the table built on 2026-10-16 from the same mirror. Prices after 2026-08-24 are unavailable until the mirror recovers.
 
 ## Data quality
 
