@@ -1,6 +1,11 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='incremental',
+    incremental_strategy='merge',
+    unique_key=['week_start', 'state', 'product'],
+    full_refresh=false,
+    on_schema_change='fail'
+) }}
 
--- Silver: weekly fuel prices by state and product, aggregated from station-level survey rows.
 select
   date_trunc(data_coleta, week(monday)) as week_start,
   sigla_uf as state,
@@ -14,4 +19,7 @@ where ano >= 2022
   and sigla_uf in ('SP', 'GO', 'MG', 'MS', 'PR')
   and produto in ('Etanol', 'Gasolina')
   and preco_venda between 1 and 20
+{% if is_incremental() %}
+  and data_coleta >= date_sub((select max(week_start) from {{ this }}), interval 28 day)
+{% endif %}
 group by 1, 2, 3
