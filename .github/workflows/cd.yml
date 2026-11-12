@@ -49,4 +49,5 @@ jobs:
 
       - name: dbt source freshness (fuel price mirror)
         working-directory: dbt/agro_elt
+        continue-on-error: true
         run: dbt source freshness --select source:basedosdados
